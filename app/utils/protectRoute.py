@@ -1,4 +1,4 @@
-from sqlalchemy.orm import Session
+from sqlalchemy.ext.asyncio import AsyncSession
 from fastapi import Depends, HTTPException, status, Header
 from typing import Annotated, Union
 from app.security.authHandler import authHandler
@@ -6,12 +6,12 @@ from app.db.database import get_db
 from app.db.schemas.userChemas import UserOutputSchema
 from app.service.userService import UserService
 
-AUTH_PREFIX = 'Edifier '
+AUTH_PREFIX = 'Bearer '
 
 
-def get_current_user(session: Session = Depends(get_db),
-                     authorization: Annotated[Union[str, None], Header()] = None
-                     ) -> UserOutputSchema:
+async def get_current_user(session: AsyncSession = Depends(get_db),
+                           authorization: Annotated[Union[str, None], Header()] = None
+                           ) -> UserOutputSchema:
     auth_exception = HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
                                    detail='Invalid authentication credentials')
 
@@ -22,7 +22,7 @@ def get_current_user(session: Session = Depends(get_db),
     payload = authHandler.decode_jwt(token=authorization[len(AUTH_PREFIX):])
     if payload and payload['user_id']:
         try:
-            user = UserService(session=session).get_user_by_id(payload['user_id'])
+            user = await UserService(session=session).get_user_by_id(payload['user_id'])
             return UserOutputSchema(
                 id=user.id,
                 first_name=user.first_name,

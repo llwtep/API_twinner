@@ -1,5 +1,4 @@
 from typing import List
-
 from ..database import Base
 from sqlalchemy.orm import mapped_column, Mapped, relationship
 

@@ -2,8 +2,8 @@ from decouple import config
 import time
 import jwt
 
-JWT_SECRET = 'azam_2005'
-JWT_ALGORITHM = 'HS256'
+JWT_SECRET = config('JWT_SECRET')
+JWT_ALGORITHM = config('JWT_ALGORITHM')
 
 
 class authHandler(object):
@@ -11,7 +11,7 @@ class authHandler(object):
     def sign_jwt(user_id: int):
         payload = {
             'user_id': user_id,
-            'expires': time.time()+900
+            'expires': time.time() + 900
         }
         token = jwt.encode(payload, JWT_SECRET, algorithm=JWT_ALGORITHM)
         return token
@@ -30,7 +30,3 @@ class authHandler(object):
             print('Invalid token')
         except Exception as e:
             print(f"Unable decode the token: {str(e)}")
-
-
-
-
