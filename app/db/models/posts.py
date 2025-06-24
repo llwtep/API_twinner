@@ -1,4 +1,4 @@
-from sqlalchemy import ForeignKey, text
+from sqlalchemy import ForeignKey, func, text
 from ..database import Base
 from sqlalchemy.orm import mapped_column, Mapped, relationship
 import datetime
@@ -12,5 +12,6 @@ class PostsOrm(Base):
     title: Mapped[str]
     text_content: Mapped[str]
     created_at: Mapped[datetime.datetime] = mapped_column(
-        server_default=text("TIMEZONE('utc', now())")
+        server_default=func.now(),
+        nullable=False
     )

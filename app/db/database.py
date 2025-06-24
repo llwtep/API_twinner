@@ -1,19 +1,14 @@
 from sqlalchemy.orm import sessionmaker, DeclarativeBase
-from sqlalchemy import create_engine, URL
+from sqlalchemy import create_engine
 
-DB_URL = URL.create(
-    'postgresql',
-    username='postgres',
-    password='fmjuORlHSElUzEMYRjdGATPKefGzXbYN',
-    host='postgres.railway.internal',
-    port=5432,
-    database='railway',
-    query={'client_encoding': 'utf8'}
-)
 
-engine = create_engine('postgresql://postgres:fmjuORlHSElUzEMYRjdGATPKefGzXbYN@autorack.proxy.rlwy.net:16078/railway', echo=True)
+SQLITE_URL = "sqlite:///./test.db"
 
-SessionLocal = sessionmaker(engine, expire_on_commit=False)
+
+engine = create_engine(SQLITE_URL, echo=True)
+
+
+SessionLocal = sessionmaker(bind=engine, expire_on_commit=False)
 
 
 def get_db():
