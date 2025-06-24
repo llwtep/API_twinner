@@ -15,7 +15,7 @@ This project is a hands-on guide to building fast, efficient, and modern web API
 
 1. **Clone the repository**
     ```
-    git clone https://github.com/llwtep/FastApiApp.git  
+    git clone https://github.com/llwtep/API_twinner.git
     cd API_twinner
     ```
 
@@ -40,3 +40,6 @@ This project is a hands-on guide to building fast, efficient, and modern web API
 - **/docs**: Interactive API documentation (Swagger UI).  
 
 Each route is designed to demonstrate FastAPI's features such as request validation, dependency injection, and automatic documentation.
+
+
+## ⚠️ Itially it was written with postgresql database, but free trial database is expired so i rewrite some code in sqlite format
